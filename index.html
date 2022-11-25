@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+    <div class="content">
+    <h1 class="margin">Calculadora Fluxo de caixa Descontado</h1>
+
+    <h3 class="margin">Média Mensal do Primeiro Ano</h3>
+    <input id="n1" class="input" type="number" onchange="mediaAnual(n1,mediaAnual1)"/>
+
+    <h3 class="margin">Média Mensal do Segundo Ano</h3>
+    <input id="n2" class="input" type="number" onchange="mediaAnual(n2,mediaAnual2)"/>
+
+    <h3 class="margin">Média Mensal do Terceiro Ano</h3>
+    <input id="n3" class="input" type="number" onchange="mediaAnual(n3,mediaAnual3)"/>
+
+
+    <h3 class="margin">Média Mensal do Quarto Ano</h3>
+    <input id="n4" class="input" type="number" onchange="mediaAnual(n4,mediaAnual4)"/>
+
+
+    <button class="button" onclick="somar()">Calcular o Fluxo de caixa Descontado</button>
+    <div class="media">
+    <h4>Medias Anuais</h4>
+    <p id="n1s" class="margin"></p>
+    <p id="n2s" class="margin"></p>
+    <p id="n3s" class="margin"></p>
+    <p id="n4s" class="margin"></p>
+    </div>
+    <div id="final"></div>
+    </div>
+    </div>
+    
+    <script>
+        var n1 = document.querySelector('#n1')
+        var n2 = document.querySelector('#n2')
+        var n3 = document.querySelector('#n3')
+        var n4 = document.querySelector('#n4')
+
+        var mediaAnual1 = document.querySelector('#n1s')
+        var mediaAnual2 = document.querySelector('#n2s')
+        var mediaAnual3 = document.querySelector('#n3s')
+        var mediaAnual4 = document.querySelector('#n4s')
+
+        var final = document.querySelector('#final')
+
+        var results = {}
+
+        function mediaAnual (n,span){
+            const resultado = n.value * 12
+            const ano = n.id.split('n')[1]
+            span.innerHTML = `Média anual do ${ano}° ano: ${resultado}`
+            results[n.id] = resultado
+        }
+
+        function somar(){
+            final.innerHTML = `<h4 style="text-align: center; margin-bottom: 5px">Fluxo de caixa descontado é Calculado da seguinte forma:</h4>
+            <p>1° ano dividido por 1,10 : ${results.n1} / 1,10 = <strong>${(results.n1 / 1.10).toFixed(2)}</strong></p>
+            <p>2° ano dividido por 1,10² : ${results.n2} / (1,10)² = <strong>${(results.n2 / (Math.pow(1.10,2))).toFixed(2)}</strong></p>
+            <p>3° ano dividido por 1,10³ : ${results.n3} / (1,10)³ = <strong>${(results.n3 / (Math.pow(1.10,3))).toFixed(2)}</strong></p>
+            <p>4° ano dividido por 1,10⁴ : ${results.n4} / (1,10)⁴ = <strong>${(results.n4 / (Math.pow(1.10,4))).toFixed(2)}</strong></p>
+            <h4> O Resultado do cálculo de fluxo de caixa descontado é:</h4>
+            <p>${total()}</p>`
+        }
+
+        function total(){
+            const primeiro = Number((results.n1 / 1.10).toFixed(2))
+            const segundo = Number((results.n2 / (Math.pow(1.10,2))).toFixed(2))
+            const terceiro = Number((results.n3 / (Math.pow(1.10,3))).toFixed(2))
+            const quarto = Number((results.n4 / (Math.pow(1.10,4))).toFixed(2))
+            
+            const result = (primeiro + segundo + terceiro + quarto) / 4
+            return result
+        }
+    </script>
+
+</body>
+</html>
